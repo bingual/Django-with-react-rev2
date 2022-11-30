@@ -1,0 +1,87 @@
+{% load static humanize thumbnail instagram_tags bootstrap5 %}
+
+<div class="card my-3">
+    <div class="card-header">
+        <div>
+            <a class="text-dark text-decoration-none" href="{% url 'instagram:user_page' post.author.username %}">
+                <img class="rounded-circle" src="{{ post.author.avatar_url }}" alt="None" width="32px;">
+                {{ post.author.username }}
+            </a>
+        </div>
+    </div>
+
+    <div class="card-body">
+        <div>
+            <img src="{% thumbnail post.photo 500x200 crop %}" alt="None" width="100%">
+        </div>
+
+        <div class="my-2">
+            <div>
+                {% if post|is_like_user:user %}
+                    <a id="test" class="text-dark text-decoration-none"
+                       href="{% url 'instagram:post_unlike' post.pk %}">
+                        <i class="fa-solid fa-heart"></i>
+                    </a>
+                {% else %}
+                    <a id="test" class="text-dark text-decoration-none"
+                       href="{% url 'instagram:post_like' post.pk %}">
+                        <i class="fa-regular fa-heart"></i>
+                    </a>
+                {% endif %}
+            </div>
+            <div>
+                {{ post.caption }} <a class="text-muted text-decoration-none small"
+                                      href="{{ post.get_absolute_url }}">
+                {{ post.created_at|naturalday }}</a>
+                <hr>
+            </div>
+
+            <div id="-post-{{ post.pk }}-comment-list" class="my-3">
+                {% for comment in post.comment_set.all %}
+                    {% include 'instagram/_comment.html' %}
+                {% endfor %}
+            </div>
+
+            <div>
+                {% for tag in post.tag_set.all %}
+                    <small class="badge bg-primary">#{{ tag.name }}</small>
+                {% endfor %}
+            </div>
+        </div>
+
+    </div>
+
+    <div class="card-footer">
+        <form id="-post-{{ post.pk }}-comment-form" action="{% url 'instagram:comment_new' post.pk %}" method="post">
+            {% csrf_token %}
+            {% bootstrap_form comment_form %}
+            <input class="btn btn-primary d-grid col-sm-12" type="submit" value="작성">
+        </form>
+
+        <script>
+            $(function () {
+                let form_id = '-post-{{ post.pk }}-comment-form';
+                let comment_id = '-post-{{ post.pk }}-comment-list';
+                $('#' + form_id).submit(function (e) {
+                    e.preventDefault();
+
+                    let options = {
+                        success: function (responseText, statusText, xhr, $form) {
+                            console.group("ajaxSubmit response");
+                            console.log(responseText);
+                            console.log(statusText);
+                            console.log(xhr);
+                            console.log($form);
+                            console.groupEnd();
+
+                            $('#' + comment_id).prepend(responseText);
+                        }
+                    };
+                    $(this).ajaxSubmit(options);
+                });
+                console.log("document ready.");
+            });
+        </script>
+
+    </div>
+</div>

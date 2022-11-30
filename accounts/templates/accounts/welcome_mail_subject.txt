@@ -1,0 +1,1 @@
+{user.name} 님 Instagram 가입을 환영합니다.

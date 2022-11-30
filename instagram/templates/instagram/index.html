@@ -1,0 +1,31 @@
+{% extends 'instagram/layout.html' %}
+{% load bootstrap5 humanize %}
+
+{% block title %}Instagram | Index{% endblock %}
+{% block content %}
+    <div class="container" style="width: 70%">
+        <div class="row">
+            <div class="col-sm-12">
+                <a class="btn btn-primary d-grid col-sm-6 offset-3" href="{% url 'instagram:post_new' %}">
+                    새 포스팅 쓰기
+                </a>
+            </div>
+        </div>
+        <div class="row my-3">
+            <div class="col-sm-8">
+                {% if post_list %}
+                    {% for post in post_list %}
+                        {% include 'instagram/_post_card.html' %}
+                    {% endfor %}
+                {% else %}
+                    <div class="mt-4"><h5>포스트가 존재하지 않습니다.</h5></div>
+
+                {% endif %}
+            </div>
+
+            <div class="col-sm-4">
+                {% include 'instagram/timeline_sidebar.html' %}
+            </div>
+        </div>
+    </div>
+{% endblock %}

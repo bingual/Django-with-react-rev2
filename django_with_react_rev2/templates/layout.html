@@ -1,0 +1,120 @@
+{% load static bootstrap5 %}
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <title>{% block title %}{% endblock title %}</title>
+    <link rel="stylesheet" href="{% static 'bootstrap-5.2.3-dist/css/bootstrap.min.css' %}">
+    <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/bootswatch@4.5.2/dist/sketchy/bootstrap.min.css"
+          integrity="sha384-RxqHG2ilm4r6aFRpGmBbGTjsqwfqHOKy1ArsMhHusnRO47jcGqpIQqlQK/kmGy9R" crossorigin="anonymous">
+
+    <script src="{% static 'bootstrap-5.2.3-dist/js/bootstrap.bundle.min.js' %}"></script>
+    <script src="https://kit.fontawesome.com/178ef104db.js" crossorigin="anonymous"></script>
+    <script src="{% static 'jquery-3.6.1.min.js' %}"></script>
+    <script src="{% static 'jquery.form-4.3.0.min.js' %}"></script>
+</head>
+<body>
+
+{% bootstrap_messages %}
+
+<div class="border-bottom mb-3">
+    <div class="container" style="width: 70%">
+        <div class="row">
+            <div class="col-sm-12">
+                <div class="d-flex flex-column flex-md-row align-items-center mt-3 pb-3 bis_skin_checked=" 1>
+                    <a href="/" class="d-flex align-items-center text-dark text-decoration-none">
+                        <svg class="me-3" color="#262626" fill="#262626" height="24" role="img"
+                             viewBox="0 0 24 24" width="24">
+                            <path d="M12 2.982c2.937 0 3.285.011 4.445.064a6.087 6.087 0 0 1 2.042.379 3.408 3.408 0 0 1 1.265.823 3.408 3.408 0 0 1 .823 1.265 6.087 6.087 0 0 1 .379 2.042c.053 1.16.064 1.508.064 4.445s-.011 3.285-.064 4.445a6.087 6.087 0 0 1-.379 2.042 3.643 3.643 0 0 1-2.088 2.088 6.087 6.087 0 0 1-2.042.379c-1.16.053-1.508.064-4.445.064s-3.285-.011-4.445-.064a6.087 6.087 0 0 1-2.043-.379 3.408 3.408 0 0 1-1.264-.823 3.408 3.408 0 0 1-.823-1.265 6.087 6.087 0 0 1-.379-2.042c-.053-1.16-.064-1.508-.064-4.445s.011-3.285.064-4.445a6.087 6.087 0 0 1 .379-2.042 3.408 3.408 0 0 1 .823-1.265 3.408 3.408 0 0 1 1.265-.823 6.087 6.087 0 0 1 2.042-.379c1.16-.053 1.508-.064 4.445-.064M12 1c-2.987 0-3.362.013-4.535.066a8.074 8.074 0 0 0-2.67.511 5.392 5.392 0 0 0-1.949 1.27 5.392 5.392 0 0 0-1.269 1.948 8.074 8.074 0 0 0-.51 2.67C1.012 8.638 1 9.013 1 12s.013 3.362.066 4.535a8.074 8.074 0 0 0 .511 2.67 5.392 5.392 0 0 0 1.27 1.949 5.392 5.392 0 0 0 1.948 1.269 8.074 8.074 0 0 0 2.67.51C8.638 22.988 9.013 23 12 23s3.362-.013 4.535-.066a8.074 8.074 0 0 0 2.67-.511 5.625 5.625 0 0 0 3.218-3.218 8.074 8.074 0 0 0 .51-2.67C22.988 15.362 23 14.987 23 12s-.013-3.362-.066-4.535a8.074 8.074 0 0 0-.511-2.67 5.392 5.392 0 0 0-1.27-1.949 5.392 5.392 0 0 0-1.948-1.269 8.074 8.074 0 0 0-2.67-.51C15.362 1.012 14.987 1 12 1Zm0 5.351A5.649 5.649 0 1 0 17.649 12 5.649 5.649 0 0 0 12 6.351Zm0 9.316A3.667 3.667 0 1 1 15.667 12 3.667 3.667 0 0 1 12 15.667Zm5.872-10.859a1.32 1.32 0 1 0 1.32 1.32 1.32 1.32 0 0 0-1.32-1.32Z"></path>
+                        </svg>
+                        <img class="" src="{% static 'instagram_logo.png' %}" alt="None" width="103px;">
+                    </a>
+
+                    <nav class="d-inline-flex mt-2 mt-md-0 ms-md-auto">
+                        {% if user.is_authenticated %}
+                            <a class="me-3 text-dark text-decoration-none" href="{% url 'accounts:logout' %}"><i
+                                    class="fa-solid fa-right-from-bracket"></i></a>
+                            <a class="me-3 text-dark text-decoration-none"
+                               href="{% url 'accounts:password_change' %}"><i class="fa-solid fa-lock"></i></a>
+                            <a class="me-3 text-dark text-decoration-none"
+                               href="{% url 'instagram:user_page' user.username %}">
+                                <img class="rounded-circle" src="{{ user.avatar_url }}" alt="None" width="24px;">
+                                {{ user.username }}
+                            </a>
+                        {% else %}
+                            <a class="me-3 text-dark text-decoration-none" href="{% url 'accounts:login' %}"><i
+                                    class="fa-solid fa-right-to-bracket"></i></a>
+                            <a class="me-3 text-dark text-decoration-none" href="{% url 'accounts:signup' %}"><i
+                                    class="fa-solid fa-user-plus"></i></a>
+                        {% endif %}
+                    </nav>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+{% block content %}
+{% endblock content %}
+
+<div class="border-top mt-3">
+    <div class="container" style="width: 70%">
+        <div class="row">
+            <div class="col-sm-12">
+                <footer class="pt-4 my-md-5 pt-md-5">
+                    <div class="row" bis_skin_checked="1">
+                        <div class="col-6 col-md offset-2" bis_skin_checked="1">
+                            <h5>Features</h5>
+                            <ul class="list-unstyled text-small">
+                                <li class="mb-1"><a class="link-secondary text-decoration-none" href="#">Cool stuff</a>
+                                </li>
+                                <li class="mb-1"><a class="link-secondary text-decoration-none" href="#">Random
+                                    feature</a>
+                                </li>
+                                <li class="mb-1"><a class="link-secondary text-decoration-none" href="#">Team
+                                    feature</a>
+                                </li>
+                                <li class="mb-1"><a class="link-secondary text-decoration-none" href="#">Stuff for
+                                    developers</a></li>
+                                <li class="mb-1"><a class="link-secondary text-decoration-none" href="#">Another one</a>
+                                </li>
+                                <li class="mb-1"><a class="link-secondary text-decoration-none" href="#">Last time</a>
+                                </li>
+                            </ul>
+                        </div>
+                        <div class="col-6 col-md" bis_skin_checked="1">
+                            <h5>Resources</h5>
+                            <ul class="list-unstyled text-small">
+                                <li class="mb-1"><a class="link-secondary text-decoration-none" href="#">Resource</a>
+                                </li>
+                                <li class="mb-1"><a class="link-secondary text-decoration-none" href="#">Resource
+                                    name</a>
+                                </li>
+                                <li class="mb-1"><a class="link-secondary text-decoration-none" href="#">Another
+                                    resource</a></li>
+                                <li class="mb-1"><a class="link-secondary text-decoration-none" href="#">Final
+                                    resource</a>
+                                </li>
+                            </ul>
+                        </div>
+                        <div class="col-6 col-md" bis_skin_checked="1">
+                            <h5>About</h5>
+                            <ul class="list-unstyled text-small">
+                                <li class="mb-1"><a class="link-secondary text-decoration-none" href="#">Team</a></li>
+                                <li class="mb-1"><a class="link-secondary text-decoration-none" href="#">Locations</a>
+                                </li>
+                                <li class="mb-1"><a class="link-secondary text-decoration-none" href="#">Privacy</a>
+                                </li>
+                                <li class="mb-1"><a class="link-secondary text-decoration-none" href="#">Terms</a></li>
+                            </ul>
+                        </div>
+                    </div>
+                </footer>
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+</html>
